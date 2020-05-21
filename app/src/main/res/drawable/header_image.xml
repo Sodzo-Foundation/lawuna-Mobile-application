@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
+    <item>
+        <shape
+            android:shape="oval">
+<!--            <gradient-->
+<!--                android:angle="135"-->
+<!--                android:centerColor="#b50802"-->
+<!--                android:endColor="#ff0900"-->
+<!--                android:startColor="#ed3d37"-->
+<!--                android:type="linear" />-->
+            <solid android:color="@color/colorPrimary"/>
+        </shape>
+    </item>
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/cover_lawuna2"/>
+    </item>
+</layer-list>
