@@ -1,6 +1,6 @@
 {
   "project_info": {
-    "project_number": "1044121666661",
+    "project_number": "106441216661",
     "firebase_url": "https://lawuna-sodzo.firebaseio.com",
     "project_id": "lawuna-sodzo",
     "storage_bucket": "lawuna-sodzo.appspot.com"
@@ -8,27 +8,27 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1044121666661:android:11eb1bfe96df79ce94728c",
+        "mobilesdk_app_id": "Qce2ei9g3rscehfjpb93jm2ei0h2ei0h9uk2qb",
         "android_client_info": {
           "package_name": "com.example.lawuna"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1044121666661-1g3rscehfjpb93jm2ei0h9uk2qbbrlbp.apps.googleusercontent.com",
+          "client_id": "Qce2ei9g3rscehfjpb93jm2ei0h2ei0h9uk2qb",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAsxIbtt4OcKX4Vp5gMlxRbvEkEAmPy3cA"
+          "current_key": "Qce2ei9g3rscehfjpb93jm2ei0h2ei0h9uk2qb"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1044121666661-1g3rscehfjpb93jm2ei0h9uk2qbbrlbp.apps.googleusercontent.com",
+              "client_id": "1044121666661-Qce2ei9g3rscehfjpb93jm2ei0h2ei0h9uk2qb",
               "client_type": 3
             }
           ]
@@ -36,5 +36,5 @@
       }
     }
   ],
-  "configuration_version": "1"
+  "configuration_version": ""
 }
