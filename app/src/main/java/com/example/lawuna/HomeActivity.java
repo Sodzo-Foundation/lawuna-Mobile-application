@@ -81,27 +81,14 @@ public class HomeActivity extends AppCompatActivity {
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.user_name);
+//        Show the current user
+        navUsername.setText("Active User");
 
         Intent intent = getIntent();
         phone_number = intent.getStringExtra("phone_number");
         Log.d(TAG, "onCreate: "+phone_number);
-
-
-//        mViewPager = (ViewPager) findViewById(R.id.frag_view);
-////        setup Pager
-//        setupViewPager(mViewPager);
-//        Access the fragment
-//        Fragment fragment = new SlideshowFragment();
-////        Transition
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-////        Replace whatever is in the Legal fragment view with this fragment and transition to the back stack
-//        transaction.add(R.id.child_fragment, fragment);
-////        transaction.setTransition(new LegalFragment().getId());
-//
-////        transaction.addToBackStack(null);
-////        Commit transition
-//        transaction.commit();
-
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -144,17 +131,13 @@ public class HomeActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.logOut:
-//                if(phone_number.length() != 0){
+                if(phone_number.length() != 0){
                     signOut(phone_number);
-//                }
+                }
                 return true;
-//            case R.id.help:
-//                showHelp();
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     private void signOut(String phone_number) {
@@ -181,8 +164,6 @@ public class HomeActivity extends AppCompatActivity {
 
     //    Post Network Request
     public void postRequest(String postUrl, RequestBody postBody){
-//        progress = ProgressDialog.show(this, "Registration",
-//                "Checking...", true);
         final Request request = new Request.Builder()
                 .url(postUrl)
                 .put(postBody)
@@ -221,9 +202,7 @@ public class HomeActivity extends AppCompatActivity {
                             Intent intent = new Intent(HomeActivity.this, MainActivity.class);
 //                            Clear the Stack and start new Activity
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
                             startActivity(intent);
-    //                                finish();
 
                         Toast.makeText(HomeActivity.this, "Logged Out", Toast.LENGTH_LONG).show();
                         }
