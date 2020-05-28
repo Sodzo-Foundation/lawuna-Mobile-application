@@ -14,24 +14,12 @@
 <!--            android:title="@string/menu_home" />-->
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_description_black_24dp"
+            android:icon="@drawable/ic_insert_photo_black_24dp"
             android:title="@string/menu_gallery" />
+        <item
+            android:id="@+id/nav_legal"
+            android:icon="@drawable/ic_description_black_24dp"
+            android:title="@string/legal" />
 
-<!--        <item android:title="Legal Policies">-->
-<!--            <menu>-->
-<!--                <item-->
-<!--                    android:id="@+id/nav_privacy"-->
-<!--                    android:icon="@drawable/ic_description_black_24dp"-->
-<!--                    android:title="@string/privacy" />-->
-<!--                <item-->
-<!--                    android:id="@+id/nav_content"-->
-<!--                    android:icon="@drawable/ic_description_black_24dp"-->
-<!--                    android:title="@string/content" />-->
-<!--                <item-->
-<!--                    android:id="@+id/nav_tos"-->
-<!--                    android:icon="@drawable/ic_description_black_24dp"-->
-<!--                    android:title="@string/tos" />-->
-<!--            </menu>-->
-<!--        </item>-->
     </group>
 </menu>
