@@ -27,7 +27,7 @@
 
     <string name="menu_home">Pollutant Detection</string>
     <string name="home_title">LAWUNA</string>
-    <string name="menu_gallery">Imagery Log</string>
+    <string name="menu_gallery">Image Log</string>
     <string name="privacy">Privacy Policy</string>
     <string name="content">Content</string>
     <string name="tos">Terms of Service</string>
