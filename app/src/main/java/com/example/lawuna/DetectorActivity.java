@@ -38,20 +38,6 @@ import android.util.TypedValue;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-<<<<<<< HEAD
-=======
-//import com.android.volley.AuthFailureError;
-//import com.android.volley.NetworkResponse;
-//import com.android.volley.NoConnectionError;
-//import com.android.volley.Request;
-//import com.android.volley.Response;
-//import com.android.volley.TimeoutError;
-//import com.android.volley.VolleyError;
-//import com.android.volley.toolbox.StringRequest;
-//import com.google.gson.Gson;
-
-
->>>>>>> 8f717cec6771ad06a22334ab0f3a7302a18efb3e
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
