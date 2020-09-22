@@ -1,5 +1,22 @@
 package com.example.lawuna;
 
+/*
+ * Copyright 2020 The Lawuna Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,11 +70,8 @@ public class HomeActivity extends AppCompatActivity {
     String phone_number;
     Arrays userDetails;
     private static final String TAG = "HomeActivity";
-
     MainActivity signIn_status = new MainActivity();
-//    int SIGN_IN_STATUS = signIn_status.getSignInStatus();
-//    int SIGN_IN_STATUS = 1;
-    private String statusUpdateUrl = "http://192.168.43.2:5000/updateStatus";
+    private String statusUpdateUrl = "<api-route>";
 
 
     public Arrays getUserDetails() {
@@ -83,7 +97,7 @@ public class HomeActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         TextView navUsername = (TextView) headerView.findViewById(R.id.user_name);
-//        Show the current user
+        // Show the current user
         navUsername.setText("Active User");
 
         Intent intent = getIntent();
@@ -100,23 +114,6 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-
-
-    }
-
-    private void setupViewPager(ViewPager viewPager){
-        SectionsStatePagerAdapter adapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new SlideshowFragment(), "Legal");
-        adapter.addFragment(new LegalFragment(), "Terms of Service");
-        adapter.addFragment(new PrivacyFragment(), "Privacy Policy");
-        adapter.addFragment(new ContentFragment(), "Content");
-        viewPager.setAdapter(adapter);
-
-    }
-
-//    Access fragment
-    public void setViewPager(int fragmentNumber){
-        mViewPager.setCurrentItem(fragmentNumber);
     }
 
     @Override
@@ -142,7 +139,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void signOut(String phone_number) {
 
-//                    Create JSON Object for data transfer
+        // Create JSON Object for data transfer
         JSONObject registrationData = new JSONObject();
         try{
             registrationData.put("phonenumber", phone_number);
@@ -162,7 +159,7 @@ public class HomeActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    //    Post Network Request
+    // Post Network Request
     public void postRequest(String postUrl, RequestBody postBody){
         final Request request = new Request.Builder()
                 .url(postUrl)
@@ -196,11 +193,11 @@ public class HomeActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-    //                            If the user data is registered
+                    // If the user data is registered
                             FirebaseAuth.getInstance().signOut();
 
                             Intent intent = new Intent(HomeActivity.this, MainActivity.class);
-//                            Clear the Stack and start new Activity
+                    // Clear the Stack and start new Activity
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
 
