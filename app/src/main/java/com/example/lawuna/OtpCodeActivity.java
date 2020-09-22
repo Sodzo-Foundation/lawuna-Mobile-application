@@ -53,7 +53,7 @@ public class OtpCodeActivity extends AppCompatActivity {
     private String phone_number;
     private String user_name;
     private String email;
-    private String registerUrl = "http://192.168.43.2:5000/registerUser";
+    private String registerUrl = "<api-route>";
 
 
     MainActivity HTTPClient = new MainActivity();
@@ -99,8 +99,7 @@ public class OtpCodeActivity extends AppCompatActivity {
         resend_otp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//        Send OTP Code
-//                sendVerificationCode(phone_number);
+        // Send OTP Code
                 if (phone_number.length() != 0){
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -119,7 +118,7 @@ public class OtpCodeActivity extends AppCompatActivity {
     //    Verify OTP code
     private void verifyCode(String code){
         PhoneAuthCredential credentials = PhoneAuthProvider.getCredential(verificationId, code);
-//        Allow the user to sign in
+    // Allow the user to sign in
         signInWithCredential(credentials);
     }
 
@@ -129,10 +128,10 @@ public class OtpCodeActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull final Task<AuthResult> task) {
                         if(task.isSuccessful()){
-//                            Register User
+                        // Register User
                             registerUser();
                             Intent intent = new Intent(OtpCodeActivity.this, HomeActivity.class);
-//                            Clear the Stack and start new Activity
+                        // Clear the Stack and start new Activity
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             intent.putExtra("phone_number", phone_number);
 
@@ -153,10 +152,10 @@ public class OtpCodeActivity extends AppCompatActivity {
 
     //    Register the user
     private void registerUser(){
-//        Check if the email exists
-//                    Create JSON Object for data transfer
+    // Check if the email exists
+    // Create JSON Object for data transfer
         JSONObject registrationData = new JSONObject();
-//                    Get Timestamp
+    // Get Timestamp
         Date currentTime = Calendar.getInstance().getTime();
         String timestamp = currentTime.toString();
         Log.d("DATA",timestamp);
@@ -189,10 +188,10 @@ public class OtpCodeActivity extends AppCompatActivity {
         );
     }
 
-    //    Callback instance
+    // Callback instance
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks
             mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-        //        Called when code is sent s= verification Id sent by the SMS
+        // Called when code is sent s= verification Id sent by the SMS
         @Override
         public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken){
             super.onCodeSent(s, forceResendingToken);
@@ -200,7 +199,7 @@ public class OtpCodeActivity extends AppCompatActivity {
             verificationId = s;
         }
 
-        //    Called when the verification is complete, gets code automatically
+        // Called when the verification is complete, gets code automatically
         @Override
         public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
             String code = phoneAuthCredential.getSmsCode();
@@ -223,9 +222,7 @@ public class OtpCodeActivity extends AppCompatActivity {
         }
     };
 
-
-    //    @Override
-    //    Post Network Request
+    // Post Network Request
     public void postRequest(String postUrl, RequestBody postBody){
         OkHttpClient client = HTTPClient.getHttpClient();
         final Request request = new Request.Builder()
@@ -260,7 +257,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-//                            If the user data is registered
+                    // If the user data is registered
                             if (serverR.equals(available)){
                                 Log.d(TAG, "run: REGISTERED SUCCESSFULLY");
 

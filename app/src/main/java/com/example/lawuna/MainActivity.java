@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     ProgressDialog progress;
     protected String details = "";
-    static String serverUrl = "http://192.168.43.2:5000/signInUser";
+    static String serverUrl = "<api-route>";
     private int wait_time = 0;
     private int SIGN_IN_STATUS = 0;
     private String phone_number;
@@ -62,46 +62,17 @@ public class MainActivity extends AppCompatActivity {
     private final OkHttpClient client = new OkHttpClient();
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        // Check if user is signed in (non-null) and update UI accordingly.
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        updateUI(currentUser);
-//    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         // To apply the default app language instead of explicitly setting it.
         mAuth.useAppLanguage();
-//        create an app token
-//        FirebaseInstanceId.getInstance().getInstanceId()
-//                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-//                        if (!task.isSuccessful()) {
-//                            Log.w("TAG", "getInstanceId failed", task.getException());
-//                            return;
-//                        }
-//
-//                        // Get new Instance ID token
-//                        String token = task.getResult().getToken();
-////                        onNewToken(token);
-//
-//                        // Log and toast
-////                        String msg = token;
-////                        Log.d("TOKEN_TAG", msg);
-////                        Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
-//                    }
-//                });
 
         if (mAuth.getCurrentUser() != null) {
             Log.d(TAG, "onCreate: REDIRECT SCREEN");
             Intent intent = new Intent(this, HomeActivity.class);
-//                            Clear the Stack and start new Activity
+        // Clear the Stack and start new Activity
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
             startActivity(intent);
@@ -114,9 +85,6 @@ public class MainActivity extends AppCompatActivity {
             Button signIn = findViewById(R.id.signIn_button);
             signInDesc.setText(Html.fromHtml("<h2>Welcome to Lawuna</h2>\n"
                     +" Conserving and Rehabilitating the Environment"));
-//            disclaimer.setText(Html.fromHtml("By using this application, you agree to our"
-//                    +" <u>Terms of Service</u> and <u>Privacy Policy</u>"));
-
             String termsAndPolicies = "By using this application, you agree to our Terms of Service and Privacy Policy";
             SpannableString  ss = new SpannableString(termsAndPolicies);
             ClickableSpan clickableSpan1 = new ClickableSpan() {
@@ -130,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
                 public void updateDrawState(@NonNull TextPaint ds) {
                     super.updateDrawState(ds);
                     ds.setColor(Color.DKGRAY);
-//                    ds.setUnderlineText(false);
                 }
             };
             ClickableSpan clickableSpan2 = new ClickableSpan() {
@@ -138,14 +105,12 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(@NonNull View widget) {
                     Intent intent = new Intent(MainActivity.this, LegalActivity.class);
                     startActivity(intent);
-
                 }
 
                 @Override
                 public void updateDrawState(@NonNull TextPaint ds) {
                     super.updateDrawState(ds);
                     ds.setColor(Color.DKGRAY);
-//                    ds.setUnderlineText(false);
                 }
             };
 
@@ -171,11 +136,11 @@ public class MainActivity extends AppCompatActivity {
                     phone_number = phoneNumber.getText().toString().trim();
                     //Check if the entry fields are not null
                     if(phone_number.length() == 0){
-//                  Success in Progress Dialog
+                    // Success in Progress Dialog
                         Toast.makeText(getApplicationContext(),
                                 "Please enter registered phone number", Toast.LENGTH_LONG).show();
                     }else{
-//                    Create JSON Object for data transfer
+                    // Create JSON Object for data transfer
                         JSONObject registrationData = new JSONObject();
                         try{
                             registrationData.put("phonenumber", phone_number);
@@ -200,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.lawuna_privacy:
             case R.id.lawuna_tc:
             case R.id.lawuna_content:
-                //                        Create new Fragment
+                // Create new Fragment
                 fragment = new Fragment();
                 replaceFragment(fragment);
                 break;
@@ -208,29 +173,27 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(fragment);
     }
 
-    //        Replace Fragment
+    // Replace Fragment
     public void replaceFragment(Fragment someFragment) {
-//        Transition
+    // Transition
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//        Replace whatever is in the Legal fragment view with this fragment and transition to the back stack
+    // Replace whatever is in the Legal fragment view with this fragment and transition to the back stack
         transaction.replace(R.id.child_fragment, someFragment);
         transaction.addToBackStack(null);
-//        Commit transition
+    // Commit transition
         transaction.commit();
     }
 
-    //    Post Network Request
+    // Post Network Request
     public void postRequest(String postUrl, RequestBody postBody){
         progress = ProgressDialog.show(this, "Signing in",
                 "Please Wait...", true);
-//        create HTTPClient object
-//        client = new OkHttpClient();
         final Request request = new Request.Builder()
                 .url(postUrl)
                 .post(postBody)
                 .header("Accept","application/json")
                 .build();
-
+        // create HTTPClient object
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -338,17 +301,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-
-    //    Setter for the Sign-in Flag
-    public int setSignInStatus(int SIGN_IN_STATUS) {
-        return SIGN_IN_STATUS;
-    }
-
-    //    Getter for the Sign_in Flag
-    public int getSignInStatus(){
-        return SIGN_IN_STATUS;
     }
     //    Getter for Singleton httpClient
     public OkHttpClient getHttpClient(){

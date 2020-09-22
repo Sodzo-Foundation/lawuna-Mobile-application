@@ -56,13 +56,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
-<!--            <Spinner-->
-<!--                android:id="@+id/countries"-->
-<!--                android:layout_width="100dp"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:text="here"-->
-<!--                android:background="@drawable/text_border"  />-->
             <com.hbb20.CountryCodePicker
                 android:id="@+id/ccp"
                 android:layout_width="wrap_content"
@@ -93,19 +86,6 @@
                 android:layout_alignParentEnd="true"/>
             
         </LinearLayout>
-
-<!--        <TextView-->
-<!--        android:id="@+id/changeNumber"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="25dp"-->
-<!--        android:layout_marginStart="10dp"-->
-<!--        android:layout_marginTop="5dp"-->
-<!--        android:layout_marginEnd="5dp"-->
-<!--        android:textAlignment="center"-->
-<!--        android:textSize="15sp"-->
-<!--        android:textColor="@color/semi_transparent"-->
-<!--        android:fontFamily="sans-serif-medium"-->
-<!--        android:text="@string/change_number" />-->
 
         <Button
             android:id="@+id/verify_contact"
