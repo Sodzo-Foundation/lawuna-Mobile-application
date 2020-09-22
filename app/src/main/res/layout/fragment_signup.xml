@@ -33,18 +33,6 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:textAlignment="center">
-
-<!--        <TextView-->
-<!--            android:id="@+id/nameText"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="25dp"-->
-<!--            android:layout_marginStart="10dp"-->
-<!--            android:layout_marginTop="30dp"-->
-<!--            android:layout_marginEnd="10dp"-->
-<!--            android:textAlignment="center"-->
-<!--            android:textSize="20sp"-->
-<!--            android:fontFamily="sans-serif-medium"-->
-<!--            android:text="Name" />-->
         <EditText
             android:id="@+id/userName"
             android:layout_width="match_parent"
@@ -63,17 +51,6 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"/>
-<!--        <TextView-->
-<!--            android:id="@+id/phoneText"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="25dp"-->
-<!--            android:layout_marginStart="10dp"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:layout_marginEnd="10dp"-->
-<!--            android:textAlignment="center"-->
-<!--            android:textSize="20sp"-->
-<!--            android:fontFamily="sans-serif-medium"-->
-<!--            android:text="Email" />-->
         <EditText
             android:id="@+id/userEmail"
             android:layout_width="match_parent"

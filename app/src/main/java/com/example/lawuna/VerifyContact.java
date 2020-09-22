@@ -45,17 +45,14 @@ public class VerifyContact  extends SignUpActivity {
     SignUpActivity registered = new SignUpActivity();
 //    String username = registered.getUsername();
 //    String email = registered.getEmail();
-private static final String TAG = "VerifyContact";
-    private String registerUrl = "http://192.168.43.2:5000/checkDetails";
+    private static final String TAG = "VerifyContact";
+    private String registerUrl = "<api-route>";
     private String phone_number = "";
     private String username = "";
     private String email = "";
 
 //    Country code Picker
     CountryCodePicker ccp;
-
-    // The singleton HTTP client.
-//    private final OkHttpClient client = new OkHttpClient();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,7 +61,6 @@ private static final String TAG = "VerifyContact";
         setContentView(R.layout.fragment_verify);
         final EditText user_phone_number = findViewById(R.id.user_phoneNumber);
         Button verify_user = findViewById(R.id.verify_contact);
-//        TextView changeNumber = findViewById(R.id.changeNumber);
         TextView disclaimer = findViewById(R.id.disclaimer);
         TextView verifyDesc = findViewById(R.id.verifyDesc);
         ccp = findViewById(R.id.ccp);
@@ -85,7 +81,6 @@ private static final String TAG = "VerifyContact";
             public void updateDrawState(@NonNull TextPaint ds) {
                 super.updateDrawState(ds);
                 ds.setColor(Color.DKGRAY);
-//                    ds.setUnderlineText(false);
             }
         };
         ClickableSpan clickableSpan2 = new ClickableSpan() {
@@ -100,7 +95,6 @@ private static final String TAG = "VerifyContact";
             public void updateDrawState(@NonNull TextPaint ds) {
                 super.updateDrawState(ds);
                 ds.setColor(Color.DKGRAY);
-//                    ds.setUnderlineText(false);
             }
         };
 
@@ -111,20 +105,15 @@ private static final String TAG = "VerifyContact";
         disclaimer.setMovementMethod(LinkMovementMethod.getInstance());
         verifyDesc.setText(Html.fromHtml("<h2>Verify your number</h2> \n "
                 +" Please enter your phone number to receive an\n (OTP) one time pin"));
-//        final EditText otp = findViewById(R.id.otp);
 
 
         verify_user.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-//                String phoneNumber = user_phone_number.getText().toString().trim();
-//                phone_number = '+'+ ccp.getSelectedCountryCode() + phoneNumber;
                 phone_number = ccp.getFullNumberWithPlus();
                 Intent intent = getIntent();
                 username = intent.getStringExtra("u_name");
                 email = intent.getStringExtra("u_email");
-//                registered.setUsername(username);
-//                registered.setEmail(email);
                 //Check if the entry fields are not null
                 if(phone_number.length() == 0){
                     Toast.makeText(getApplicationContext(),
@@ -133,10 +122,7 @@ private static final String TAG = "VerifyContact";
 //                    Create JSON Object for data transfer
                     JSONObject registrationData = new JSONObject();
                     try{
-//                        registrationData.put("name", username);
-//                        registrationData.put("email", email);
                         registrationData.put("phonenumber", phone_number);
-//                        registrationData.put("joined", timestamp);
                     }catch (JSONException err){
                         err.printStackTrace();
                     }
@@ -148,28 +134,11 @@ private static final String TAG = "VerifyContact";
             }
         });
 
-//        register_user.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(VerifyContact.this, OtpCodeActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        CHANGING THE PHONE NUMBER
-//        changeNumber.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(VerifyContact.this, SignUpActivity.class);
-//                startActivity(intent);
-//            }
-//        });
     }
 
     @Override
     //    Post Network Request
     public void postRequest(String postUrl, RequestBody postBody){
-//        progress = ProgressDialog.show(this, "Registration",
-//                "Checking...", true);
         final Request request = new Request.Builder()
                 .url(postUrl)
                 .post(postBody)
@@ -200,10 +169,7 @@ private static final String TAG = "VerifyContact";
                     final String serverR = string.replace("\"", "");
                     final String available = "success";
                     final String not_available = "taken";
-//                    Log.d("RESPONSE:==>", serverR);
                     Log.d("RESPONSE-STRING:==>", serverR);
-//                    Log.d("COMPARE:==>", String.valueOf(serverR.equals(not_available)));
-//                    Log.d("COMPARE:==>", String.valueOf(string.equals(not_available)));
 
                     runOnUiThread(new Runnable() {
                         @Override
@@ -213,20 +179,14 @@ private static final String TAG = "VerifyContact";
                                 Log.d(TAG, "run: VERIFYING NUMBER");
                                 Intent intent = new Intent(VerifyContact.this, OtpCodeActivity.class);
                                 intent.putExtra("phone_number", phone_number);
-//                                intent.putExtra("user_name", username);
-//                                intent.putExtra("email", email);
-
                                 startActivity(intent);
-//                                finish();
 
                             } else if (serverR.equals(not_available)) {
                                 Log.d(TAG, "run: DUPLICATE PHONE NUMBER");
                                 Intent intent = new Intent(VerifyContact.this, SignUpActivity.class);
 //                            Clear the Stack and start new Activity
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
                                 startActivity(intent);
-//                                finish();
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
@@ -243,8 +203,6 @@ private static final String TAG = "VerifyContact";
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
-//                                        progress.setMessage("Checking..."); // Setting Message
-//                                        progress.setTitle("Registration"); // Setting Title
                                         progress.dismiss();
                                     }
                                 }).start();
@@ -260,15 +218,5 @@ private static final String TAG = "VerifyContact";
             }
         });
     }
-
-    //    Setter for the Full Names
-//    public String setPhoneNumber(String phone_number) {
-//        return phone_number;
-//    }
-
-    //    Getter for the Full Names
-//    public String getPhoneNumber(){
-//        return phone_number;
-//    }
 
 }

@@ -46,7 +46,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class SignUpActivity extends MainActivity {
-//    ViewFlipper flipper;
     private static String name = "";
     private static String emailAddress = "";
     private static String u_name;
@@ -57,7 +56,7 @@ public class SignUpActivity extends MainActivity {
     
     MainActivity HTTPClient = new MainActivity();
 
-    private String serverUrl = "http://192.168.43.2:5000/email_check";
+    private String serverUrl = "<api-route>";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,13 +73,6 @@ public class SignUpActivity extends MainActivity {
         final EditText userEmail = findViewById(R.id.userEmail);
         String termsAndConditions = getResources().getString(R.string.terms_and_conditions);
         String privacyPolicy = getResources().getString(R.string.privacy_policy);
-
-//        disclaimer.setText(
-//                String.format(
-//                        getResources().getString(R.string.disclaimer_message),
-//                        termsAndConditions,
-//                        privacyPolicy)
-//        );
         disclaimer.setMovementMethod(LinkMovementMethod.getInstance());
         Pattern termsAndConditionsMatcher = Pattern.compile(termsAndConditions);
         Linkify.addLinks(disclaimer, termsAndConditionsMatcher, "terms:");
@@ -88,10 +80,6 @@ public class SignUpActivity extends MainActivity {
         Pattern privacyPolicyMatcher = Pattern.compile(termsAndConditions);
         Linkify.addLinks(disclaimer, privacyPolicyMatcher, "privacy:");
 
-
-//        String html = "<u>Terms of Service</u> ";
-//        Spanned tos = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY);
-//        Spanned pp = Html.fromHtml("<u>Privacy Policy</u> ");
         signUpDesc.setText(Html.fromHtml("<h2>Welcome to Lawuna</h2>\n"
                 +"Conserving and Rehabilitating the Environment"));
 
@@ -108,7 +96,6 @@ public class SignUpActivity extends MainActivity {
             public void updateDrawState(@NonNull TextPaint ds) {
                 super.updateDrawState(ds);
                 ds.setColor(Color.DKGRAY);
-//                    ds.setUnderlineText(false);
             }
         };
         ClickableSpan clickableSpan2 = new ClickableSpan() {
@@ -123,7 +110,6 @@ public class SignUpActivity extends MainActivity {
             public void updateDrawState(@NonNull TextPaint ds) {
                 super.updateDrawState(ds);
                 ds.setColor(Color.DKGRAY);
-//                    ds.setUnderlineText(false);
             }
         };
 
@@ -139,16 +125,16 @@ public class SignUpActivity extends MainActivity {
                 username = fullName.getText().toString().trim();
                 email = userEmail.getText().toString().trim();
 
-//                Username && Email Data
+            // Username && Email Data
                 u_name = setUsername(username);
                 u_email = setEmail(email);
-            //Check if the entry fields are not null
+            // Check if the entry fields are not null
                 if(username.length() == 0 || email.length() == 0){
                     Toast.makeText(getApplicationContext(),
                             "Enter All Credentials", Toast.LENGTH_LONG).show();
                 }else{
-//                    Check if the email exists
-//                    Create JSON Object for data transfer
+            // Check if the email exists
+            // Create JSON Object for data transfer
                     JSONObject registrationData = new JSONObject();
                     try{
                         registrationData.put("email", email);
@@ -170,32 +156,18 @@ public class SignUpActivity extends MainActivity {
                 startActivity(intent);
             }
         });
-//
-//        setContentView(R.layout.fragment_privacy_policy);
-//        flipper = (ViewFlipper)findViewById(R.id.details);
-//        Button privacy = findViewById(R.id.lawuna_privacy);
-//        privacy.setOnClickListener((View.OnClickListener) new flipView());
-
-    }
-
-//    class flipView implements View.OnClickListener{
-//        public void onClick(View view){
-//            flipper.showNext();
-//        }
-//    };
 
     @Override
-//    Post Network Request
+    // Post Network Request
     public void postRequest(String postUrl, RequestBody postBody){
         progress = ProgressDialog.show(this, "Registration",
                 "Checking...", true);
-        // The singleton HTTP client.
-//        final OkHttpClient client = new OkHttpClient();
         final Request request = new Request.Builder()
                 .url(postUrl)
                 .post(postBody)
                 .header("Accept","application/json")
                 .build();
+        // The singleton HTTP client.
         OkHttpClient client = HTTPClient.getHttpClient();
 
         client.newCall(request).enqueue(new Callback() {
@@ -233,8 +205,6 @@ public class SignUpActivity extends MainActivity {
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
-//                                        progress.setMessage("Checking..."); // Setting Message
-//                                        progress.setTitle("Registration"); // Setting Title
                                         progress.dismiss();
                                     }
                                 }).start();
@@ -242,7 +212,6 @@ public class SignUpActivity extends MainActivity {
                                 intent.putExtra("u_name",u_name);
                                 intent.putExtra("u_email",u_email);
                                 startActivity(intent);
-//                                finish();
 
                             }else if (serverR.equals(email_used)){ //Email Taken
                                 new Thread(new Runnable() {
@@ -252,13 +221,10 @@ public class SignUpActivity extends MainActivity {
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
-//                                        progress.setMessage("Checking..."); // Setting Message
-//                                        progress.setTitle("Registration"); // Setting Title
                                         progress.dismiss();
                                     }
                                 }).start();
 
-//                                progressBar.setVisibility(View.VISIBLE);
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
@@ -294,56 +260,5 @@ public class SignUpActivity extends MainActivity {
         });
     }
 
-    //    Compare Strings
-    public static int stringCompare(String str1, String str2)
-    {
-
-        int l1 = str1.length();
-        int l2 = str2.length();
-        int lmin = Math.min(l1, l2);
-
-        for (int i = 0; i < lmin; i++) {
-            int str1_ch = (int)str1.charAt(i);
-            int str2_ch = (int)str2.charAt(i);
-
-            if (str1_ch != str2_ch) {
-//                return str1_ch - str2_ch;
-                return 3;
-            }
-        }
-
-        // Edge case for strings like
-        // String 1="Geeks" and String 2="Geeksforgeeks"
-        if (l1 != l2) {
-//            return l1 - l2;
-            return 1;
-        }
-
-        // If none of the above conditions is true,
-        // it implies both the strings are equal
-        else {
-            return 0;
-        }
-    }
-
-    //    Setter for the Full Names
-    public String setUsername(String name) {
-        return name;
-    }
-
-    //    Getter for the Full Names
-    public static String getUsername(){
-        return name;
-    }
-
-    //    Setter for the Full Names
-    public String setEmail(String email) {
-        return email;
-    }
-
-    //    Getter for the Full Names
-    public static String getEmail(){
-        return emailAddress;
-    }
 
 }
