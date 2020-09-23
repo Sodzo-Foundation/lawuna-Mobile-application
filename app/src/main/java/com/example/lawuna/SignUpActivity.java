@@ -232,7 +232,6 @@ public class SignUpActivity extends MainActivity {
                                                 "Email already used.", Toast.LENGTH_LONG).show();
                                     }
                                 },950);
-//                                setSignInStatus(1);
 
                             }else {
                                 new Thread(new Runnable() {
