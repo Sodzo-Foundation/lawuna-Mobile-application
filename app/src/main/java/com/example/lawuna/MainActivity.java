@@ -21,7 +21,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     private int wait_time = 0;
     private int SIGN_IN_STATUS = 0;
     private String phone_number;
+    // User Session Manager Class
+    UserSessionManager session;
     // The singleton HTTP client.
     private final OkHttpClient client = new OkHttpClient();
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -68,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // To apply the default app language instead of explicitly setting it.
         mAuth.useAppLanguage();
+        // User Session Manager
+        session = new UserSessionManager(getApplicationContext());
 
         if (mAuth.getCurrentUser() != null) {
             Log.d(TAG, "onCreate: REDIRECT SCREEN");
@@ -216,15 +219,27 @@ public class MainActivity extends AppCompatActivity {
                     final String serverResponse = response.body().toString().trim();
                     String string = response.body().string().trim();
                     final String serverR = string.replace("\"", "");
+                    JSONObject jsonObject = new JSONObject(string);
+                    final String success = jsonObject.getString("response");
                     final String signed = "success";
                     final String in_use = "active";
                     final String none = "empty";
-
                     Log.d("RESPONSE:==>",serverR);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (serverR.equals(signed)){
+                            if (success.equals(signed)){
+                                String email = null;
+                                String username = null;
+                                try {
+                                    username = jsonObject.getString("username");
+                                    email = jsonObject.getString("email");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                // Creating user login session
+                                session.createUserLoginSession(username, email, phone_number);
+                                Log.d("HERER:==>",success);
                                 new Thread(new Runnable() {
                                     public void run() {
                                         try {
@@ -239,17 +254,16 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         Toast.makeText(getApplicationContext(),
-                                                "Logged In Successfully", Toast.LENGTH_LONG).show();
+                                                "Sending OTP", Toast.LENGTH_LONG).show();
                                     }
                                 },950);
-                               setSignInStatus(1);
-
+                                // Verify User through a OTP
                                 Intent intent = new Intent(MainActivity.this, SignInOtp.class);
                                 intent.putExtra("phone_number", phone_number);
                                 startActivity(intent);
-//                                finish();
 
-                            } else if (serverR.equals(in_use)) {
+                            } else if (success.equals(in_use)) {
+                                Log.d("HERER:==>",in_use);
                                 new Thread(new Runnable() {
                                     public void run() {
                                         try {
@@ -269,8 +283,8 @@ public class MainActivity extends AppCompatActivity {
                                 },950);
 
 
-                            } else if (serverR.equals(none)) {
-                                Log.d("HERE:==>",serverResponse);
+                            } else if (success.equals(none)) {
+                                Log.d("HERE:==>",none);
                                 new Thread(new Runnable() {
                                     public void run() {
                                         try {
@@ -299,6 +313,7 @@ public class MainActivity extends AppCompatActivity {
                 }catch (Exception e){
                     e.printStackTrace();
                 }
+                response.body().close();
             }
         });
     }

@@ -71,6 +71,7 @@ public class HomeActivity extends AppCompatActivity {
     Arrays userDetails;
     private static final String TAG = "HomeActivity";
     MainActivity signIn_status = new MainActivity();
+    PeriodicWorkRequest periodicWorkRequest = null;
     private String statusUpdateUrl = "<api-route>";
 
 
@@ -99,6 +100,13 @@ public class HomeActivity extends AppCompatActivity {
         TextView navUsername = (TextView) headerView.findViewById(R.id.user_name);
         // Show the current user
         navUsername.setText("Active User");
+
+        //This is the subclass of our WorkRequest
+        // Executes the deletion as a background process
+        periodicWorkRequest  = new PeriodicWorkRequest.Builder(
+                DeleteWorker.class, 10, TimeUnit.HOURS)
+                .build();
+        WorkManager.getInstance().enqueue(periodicWorkRequest);
 
         Intent intent = getIntent();
         phone_number = intent.getStringExtra("phone_number");

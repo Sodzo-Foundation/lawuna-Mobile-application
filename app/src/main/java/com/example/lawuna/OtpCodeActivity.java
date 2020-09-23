@@ -53,6 +53,8 @@ public class OtpCodeActivity extends AppCompatActivity {
     private String phone_number;
     private String user_name;
     private String email;
+    // User Session Manager Class
+    UserSessionManager session;
     private String registerUrl = "<api-route>";
 
 
@@ -64,6 +66,8 @@ public class OtpCodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.fragment_otp);
+        // User Session Manager
+        session = new UserSessionManager(getApplicationContext());
         Button send_otp = findViewById(R.id.otp_Code);
         TextView otpDesc = findViewById(R.id.otpDesc);
         TextView resend_otp = findViewById(R.id.resend_code);
@@ -77,7 +81,9 @@ public class OtpCodeActivity extends AppCompatActivity {
         email = intent.getStringExtra("email");
         String number_save = phone_number;
         Log.d(TAG, "onCreate: PHONE "+phone_number);
-//        Send OTP Code
+        // Creating user login session
+        session.createUserLoginSession(user_name, email, phone_number);
+        // Send OTP Code
         otpDesc.setText(Html.fromHtml("<h2>We've sent an OTP\n"
                 +" (One Time Pin) \nto</h2>"
                 +phone_number));
