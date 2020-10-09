@@ -67,7 +67,7 @@ public class HomeActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private SectionsStatePagerAdapter mSectionsStatePagerAdapter;
     private ViewPager mViewPager;
-    String phone_number;
+    private String phone_number, username, email;
     Arrays userDetails;
     private static final String TAG = "HomeActivity";
     MainActivity signIn_status = new MainActivity();
@@ -87,6 +87,16 @@ public class HomeActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
+        // Session class instance
+        session = new UserSessionManager(getApplicationContext());
+        // get user data from session
+        HashMap<String, String> user = session.getUserDetails();
+        // get name
+        String username = user.get(UserSessionManager.KEY_NAME);
+        // get email
+        email = user.get(UserSessionManager.KEY_EMAIL);
+        // get user phone number
+        phone_number = user.get(UserSessionManager.KEY_PHONE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,8 +108,9 @@ public class HomeActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         TextView navUsername = (TextView) headerView.findViewById(R.id.user_name);
+        setPhoneNumber(phone_number);
         // Show the current user
-        navUsername.setText("Active User");
+        navUsername.setText(username);
 
         //This is the subclass of our WorkRequest
         // Executes the deletion as a background process
@@ -136,9 +147,7 @@ public class HomeActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.logOut:
-                if(phone_number.length() != 0){
                     signOut(phone_number);
-                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -165,6 +174,14 @@ public class HomeActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    // Access user details
+    public void setPhoneNumber(String phone_number){
+        this.phone_number = phone_number;
+    }
+    public String getPhoneNumber(){
+        return phone_number;
     }
 
     // Post Network Request
