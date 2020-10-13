@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     UserSessionManager session;
     // The singleton HTTP client.
     private final OkHttpClient client = new OkHttpClient();
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,15 @@ public class MainActivity extends AppCompatActivity {
         // User Session Manager
         session = new UserSessionManager(getApplicationContext());
 
+        if (mAuth.getCurrentUser() != null) {
+            Log.d(TAG, "onCreate: REDIRECT SCREEN");
+            Intent intent = new Intent(this, HomeActivity.class);
+        // Clear the Stack and start new Activity
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+            startActivity(intent);
+
+        }else{
             setContentView(R.layout.sign_in);
             TextView register = findViewById(R.id.register_link);
             TextView signInDesc = findViewById(R.id.signDesc);
@@ -148,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
+        }
     }
 
 
