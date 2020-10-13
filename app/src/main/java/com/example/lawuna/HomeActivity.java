@@ -221,7 +221,7 @@ public class HomeActivity extends AppCompatActivity {
                     // If the user data is registered
                             FirebaseAuth.getInstance().signOut();
 
-                            Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                            Intent intent = new Intent(HomeActivity.this, StartActivity.class);
                     // Clear the Stack and start new Activity
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
