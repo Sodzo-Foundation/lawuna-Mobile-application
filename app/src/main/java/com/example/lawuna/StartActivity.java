@@ -39,6 +39,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+
 public class StartActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
