@@ -37,7 +37,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.appcompat.app.AppCompatActivity;
@@ -72,7 +71,10 @@ public class MainActivity extends AppCompatActivity {
     UserSessionManager session;
     // The singleton HTTP client.
     private final OkHttpClient client = new OkHttpClient();
+<<<<<<< HEAD:android/app/src/main/java/com/example/lawuna/MainActivity.java
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
+=======
+>>>>>>> develop:app/src/main/java/com/example/lawuna/MainActivity.java
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth.useAppLanguage();
         // User Session Manager
         session = new UserSessionManager(getApplicationContext());
+<<<<<<< HEAD:android/app/src/main/java/com/example/lawuna/MainActivity.java
         setContentView(R.layout.sign_in);
         TextView register = findViewById(R.id.register_link);
         TextView signInDesc = findViewById(R.id.signDesc);
@@ -119,6 +122,44 @@ public class MainActivity extends AppCompatActivity {
                 ds.setColor(Color.DKGRAY);
             }
         };
+=======
+
+            setContentView(R.layout.sign_in);
+            TextView register = findViewById(R.id.register_link);
+            TextView signInDesc = findViewById(R.id.signDesc);
+            TextView disclaimer = findViewById(R.id.disclaimer);
+            Button signIn = findViewById(R.id.signIn_button);
+            signInDesc.setText(Html.fromHtml("<h2>Welcome to Lawuna</h2>\n"
+                    +" Conserving and Rehabilitating the Environment"));
+            String termsAndPolicies = "By using this application, you agree to our Terms of Service and Privacy Policy";
+            SpannableString  ss = new SpannableString(termsAndPolicies);
+            ClickableSpan clickableSpan1 = new ClickableSpan() {
+                @Override
+                public void onClick(@NonNull View widget) {
+                    Intent intent = new Intent(MainActivity.this, LegalActivity.class);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void updateDrawState(@NonNull TextPaint ds) {
+                    super.updateDrawState(ds);
+                    ds.setColor(Color.DKGRAY);
+                }
+            };
+            ClickableSpan clickableSpan2 = new ClickableSpan() {
+                @Override
+                public void onClick(@NonNull View widget) {
+                    Intent intent = new Intent(MainActivity.this, LegalActivity.class);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void updateDrawState(@NonNull TextPaint ds) {
+                    super.updateDrawState(ds);
+                    ds.setColor(Color.DKGRAY);
+                }
+            };
+>>>>>>> develop:app/src/main/java/com/example/lawuna/MainActivity.java
 
         ss.setSpan(clickableSpan1, 43,60, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(clickableSpan2, 65,79, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -126,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
         disclaimer.setText(ss);
         disclaimer.setMovementMethod(LinkMovementMethod.getInstance());
 
+<<<<<<< HEAD:android/app/src/main/java/com/example/lawuna/MainActivity.java
         register.setMovementMethod(LinkMovementMethod.getInstance());
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,15 +194,52 @@ public class MainActivity extends AppCompatActivity {
                         registrationData.put("phonenumber", phone_number);
                     }catch (JSONException err){
                         err.printStackTrace();
+=======
+            register.setMovementMethod(LinkMovementMethod.getInstance());
+            register.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                    startActivity(intent);
+                }
+            });
+            signIn.setMovementMethod(LinkMovementMethod.getInstance());
+            signIn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final EditText phoneNumber = findViewById(R.id.user_contact);
+                    phone_number = phoneNumber.getText().toString().trim();
+                    //Check if the entry fields are not null
+                    if(phone_number.length() == 0){
+                    // Success in Progress Dialog
+                        Toast.makeText(getApplicationContext(),
+                                "Please enter registered phone number", Toast.LENGTH_LONG).show();
+                    }else{
+                    // Create JSON Object for data transfer
+                        JSONObject registrationData = new JSONObject();
+                        try{
+                            registrationData.put("phonenumber", phone_number);
+                        }catch (JSONException err){
+                            err.printStackTrace();
+                        }
+
+                        RequestBody body = RequestBody.create(registrationData.toString(), MediaType.parse("application/json; charset=utf-8"));
+
+                        postRequest(serverUrl, body);
+>>>>>>> develop:app/src/main/java/com/example/lawuna/MainActivity.java
                     }
 
                     RequestBody body = RequestBody.create(registrationData.toString(), MediaType.parse("application/json; charset=utf-8"));
 
                     postRequest(serverUrl, body);
                 }
+<<<<<<< HEAD:android/app/src/main/java/com/example/lawuna/MainActivity.java
 
             }
         });
+=======
+            });
+>>>>>>> develop:app/src/main/java/com/example/lawuna/MainActivity.java
     }
 
 
@@ -170,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.lawuna_privacy:
             case R.id.lawuna_tc:
             case R.id.lawuna_content:
-                //                        Create new Fragment
+                // Create new Fragment
                 fragment = new Fragment();
                 replaceFragment(fragment);
                 break;
@@ -178,18 +257,18 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(fragment);
     }
 
-    //        Replace Fragment
+    // Replace Fragment
     public void replaceFragment(Fragment someFragment) {
-//        Transition
+    // Transition
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//        Replace whatever is in the Legal fragment view with this fragment and transition to the back stack
+    // Replace whatever is in the Legal fragment view with this fragment and transition to the back stack
         transaction.replace(R.id.child_fragment, someFragment);
         transaction.addToBackStack(null);
-//        Commit transition
+    // Commit transition
         transaction.commit();
     }
 
-    //    Post Network Request
+    // Post Network Request
     public void postRequest(String postUrl, RequestBody postBody){
         progress = ProgressDialog.show(this, "Signing in",
                 "Please Wait...", true);
@@ -198,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
                 .post(postBody)
                 .header("Accept","application/json")
                 .build();
-
+        // create HTTPClient object
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -272,7 +351,6 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MainActivity.this, SignInOtp.class);
                                 intent.putExtra("phone_number", phone_number);
                                 startActivity(intent);
-//                                finish();
 
                             } else if (success.equals(in_use)) {
                                 Log.d("HERER:==>",in_use);
@@ -329,7 +407,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+<<<<<<< HEAD:android/app/src/main/java/com/example/lawuna/MainActivity.java
 
+=======
+>>>>>>> develop:app/src/main/java/com/example/lawuna/MainActivity.java
     //    Getter for Singleton httpClient
     public OkHttpClient getHttpClient(){
         return client;

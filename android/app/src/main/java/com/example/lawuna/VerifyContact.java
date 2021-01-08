@@ -57,7 +57,15 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class VerifyContact  extends SignUpActivity {
+<<<<<<< HEAD:android/app/src/main/java/com/example/lawuna/VerifyContact.java
 private static final String TAG = "VerifyContact";
+=======
+//    Get the username and email
+    SignUpActivity registered = new SignUpActivity();
+//    String username = registered.getUsername();
+//    String email = registered.getEmail();
+    private static final String TAG = "VerifyContact";
+>>>>>>> develop:app/src/main/java/com/example/lawuna/VerifyContact.java
     private String registerUrl = "<api-route>";
     private String phone_number = "";
     private String username = "";
@@ -190,20 +198,20 @@ private static final String TAG = "VerifyContact";
                                 Log.d(TAG, "run: VERIFYING NUMBER");
                                 Intent intent = new Intent(VerifyContact.this, OtpCodeActivity.class);
                                 intent.putExtra("phone_number", phone_number);
+<<<<<<< HEAD:android/app/src/main/java/com/example/lawuna/VerifyContact.java
                                 intent.putExtra("user_name", username);
                                 intent.putExtra("email", email);
 
+=======
+>>>>>>> develop:app/src/main/java/com/example/lawuna/VerifyContact.java
                                 startActivity(intent);
-//                                finish();
 
                             } else if (serverR.equals(not_available)) {
                                 Log.d(TAG, "run: DUPLICATE PHONE NUMBER");
                                 Intent intent = new Intent(VerifyContact.this, SignUpActivity.class);
 //                            Clear the Stack and start new Activity
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
                                 startActivity(intent);
-//                                finish();
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {

@@ -1,3 +1,5 @@
+package com.example.lawuna;
+
 /*
  * Copyright 2020 The Lawuna Authors. All Rights Reserved.
  *
@@ -14,7 +16,6 @@
  * limitations under the License.
  */
 
-package com.example.lawuna;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -66,15 +67,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.android.volley.AuthFailureError;
-//import com.android.volley.NetworkResponse;
-//import com.android.volley.NoConnectionError;
-//import com.android.volley.Request;
-//import com.android.volley.Response;
-//import com.android.volley.TimeoutError;
-//import com.android.volley.VolleyError;
-//import com.android.volley.toolbox.StringRequest;
-//import com.bumptech.glide.Glide;
 import com.example.lawuna.env.ImageUtils;
 import com.example.lawuna.env.Logger;
 import com.example.lawuna.env.CustomException;
@@ -89,7 +81,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-//import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -171,8 +162,8 @@ public abstract class CameraActivity extends HomeActivity
     private double wayLongitude, wayLatitude;
     String sent_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     protected static final ArrayList<String> imageListLog = new ArrayList<String>();
-//  private Instant Glide;
     HomeActivity obj = new HomeActivity();
+    private String phone_number;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -196,10 +187,10 @@ public abstract class CameraActivity extends HomeActivity
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-            if (ContextCompat.checkSelfPermission(this, PERMISSION_WRITE_STORAGE)
+        if (ContextCompat.checkSelfPermission(this, PERMISSION_WRITE_STORAGE)
                 != PackageManager.PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(this, PERMISSION_READ_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(this, PERMISSION_READ_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
             requestWritePermission();
             requestReadPermission();
         }
@@ -413,7 +404,7 @@ public abstract class CameraActivity extends HomeActivity
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSIONS_REQUEST) {
             if (allPermissionsGranted(grantResults)) {
-                    setFragment();
+                setFragment();
             } else {
                 requestPermission();
                 requestLocationPermission();
@@ -452,9 +443,9 @@ public abstract class CameraActivity extends HomeActivity
     }
     private void requestLocationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            Check if the permission was requested before
+        // Check if the permission was requested before
             if (shouldShowRequestPermissionRationale(PERMISSION_LOCATION)) {
-//                Explains why we require the permission
+            // Explains why we require the permission
                 new AlertDialog.Builder(this)
                         .setTitle("Permission required")
                         .setMessage("Location permission is required to use Lawuna")
@@ -478,9 +469,9 @@ public abstract class CameraActivity extends HomeActivity
 
     private void requestWritePermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            Check if the permission was requested before
+        // Check if the permission was requested before
             if (shouldShowRequestPermissionRationale(PERMISSION_WRITE_STORAGE)) {
-//                Explains why we require the permission
+            // Explains why we require the permission
                 new AlertDialog.Builder(this)
                         .setTitle("Permission required")
                         .setMessage("Storage permission is required to use Lawuna")
@@ -504,9 +495,9 @@ public abstract class CameraActivity extends HomeActivity
 
     private void requestReadPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            Check if the permission was requested before
+        // Check if the permission was requested before
             if (shouldShowRequestPermissionRationale(PERMISSION_READ_STORAGE)) {
-//                Explains why we require the permission
+            // Explains why we require the permission
                 new AlertDialog.Builder(this)
                         .setTitle("Permission required")
                         .setMessage("Storage permission is required to use Lawuna")
@@ -647,32 +638,11 @@ public abstract class CameraActivity extends HomeActivity
         else apiSwitchCompat.setText("TFLITE");
     }
 
-    @Override
-    public void onClick(View v) {
-//        if (v.getId() == R.id.plus) {
-//            String threads = threadsTextView.getText().toString().trim();
-//            int numThreads = Integer.parseInt(threads);
-//            if (numThreads >= 9) return;
-//            numThreads++;
-//            threadsTextView.setText(String.valueOf(numThreads));
-//            setNumThreads(numThreads);
-//        } else if (v.getId() == R.id.minus) {
-//            String threads = threadsTextView.getText().toString().trim();
-//            int numThreads = Integer.parseInt(threads);
-//            if (numThreads == 1) {
-//                return;
-//            }
-//            numThreads--;
-//            threadsTextView.setText(String.valueOf(numThreads));
-//            setNumThreads(numThreads);
-//        }
-    }
-
 
     //  Get location DATA
     protected void getPosition() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(CameraActivity.this);
-//      Request location updates
+    // Request location updates
         LocationRequest mLocationRequest = LocationRequest.create();
         mLocationRequest.setInterval(60000);
         mLocationRequest.setFastestInterval(5000);
@@ -690,7 +660,7 @@ public abstract class CameraActivity extends HomeActivity
                 }
             }
         };
-//        Check if user granted permission
+        // Check if user granted permission
         if (ActivityCompat.checkSelfPermission(CameraActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(CameraActivity.this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -698,7 +668,7 @@ public abstract class CameraActivity extends HomeActivity
             requestLocationPermission();
         }
         LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(mLocationRequest, mLocationCallback, null);
-//        Get last location
+        // Get last location
         LocationServices.getFusedLocationProviderClient(this).getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
@@ -714,7 +684,7 @@ public abstract class CameraActivity extends HomeActivity
 
     }
 
-//   Get GPS Coordinates
+    //   Get GPS Coordinates
     public void setLatitude(double currentLatitude){
         this.wayLatitude = currentLatitude;
     }
@@ -728,96 +698,6 @@ public abstract class CameraActivity extends HomeActivity
     public String getLongitude(){
         return String.valueOf(wayLongitude);
     }
-
-   // Saved Image Log
-    public void imageLog() {
-        //Create JSON Object for data transfer
-        JSONObject registrationData = new JSONObject();
-        try{
-            LOGGER.i("PHONE NUMBER "+obj.getPhoneNumber()+" DATE "+sent_date);
-            registrationData.put("phonenumber", obj.getPhoneNumber());
-            registrationData.put("date", sent_date);
-        }catch (JSONException err){
-            err.printStackTrace();
-        }
-
-        RequestBody body = RequestBody.create(registrationData.toString(), MediaType.parse("application/json; charset=utf-8"));
-
-        LOGGER.i("REQUESTBODY: "+registrationData);
-        logRequest(SecUrl, body);
-    }
-
-    public void logRequest(String postUrl, RequestBody postBody){
-        final Request request = new Request.Builder()
-                .url(postUrl)
-                .post(postBody)
-                .header("Accept","application/json")
-                .build();
-
-        OkHttpClient client = obj.client_conn.getHttpClient();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                call.cancel();
-                Log.d("FAIL", e.getMessage());
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(),
-                                "Failed to Connect to Server", Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try {
-                    final String serverResponse = response.body().toString().trim();
-                    String string = response.body().string().trim();
-                    final String serverR = string.replace("\"", "");
-                    JSONObject jsonObject = new JSONObject(string);
-                    final String log = jsonObject.getString("response");
-                    final String log_true = "success";
-                    final String log_false = "failed";
-                    LOGGER.i("IMG_LOGS: "+serverR);
-//                    JSONObject jsonObject = new JSONObject(serverR);
-                    final String available = "success";
-                    Log.d("LOG RESPONSE:==>", serverR);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(log.equals(log_true)){
-                                try {
-                                    JSONArray jArray = jsonObject.getJSONArray("img_log");
-                                    if (jArray != null) {
-                                        for (int i=0;i<jArray.length();i++){
-                                            imageListLog.add(jArray.getString(i));
-                                        }
-                                        LOGGER.i("LOGGED: "+imageListLog);
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            else if(log.equals(log_false)){
-                                try {
-                                    final String error = jsonObject.getString("error");
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                imageListLog.add("Sorry Image not sent");
-                            }
-                        }
-                    });
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-                response.body().close();
-            }
-        });
-    }
-
 
     //  Query for all the activities in the device which will handle the CAPTURE_REQUEST intent
     private void openCameraIntent() {
@@ -855,9 +735,9 @@ public abstract class CameraActivity extends HomeActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-//    To obtain the imageFilePath
+
+    // To obtain the imageFilePath
         super.onActivityResult(requestCode, resultCode, data);
-//
         if (requestCode == REQUEST_CAPTURE_IMAGE) {
             if (resultCode == RESULT_OK) {
                 path = data.getData();
@@ -867,7 +747,6 @@ public abstract class CameraActivity extends HomeActivity
                 Toast.makeText(this, "You cancelled the operation", Toast.LENGTH_SHORT).show();
             }
         }
-
     }
 
     //  Create a file with jpg ext
@@ -892,7 +771,6 @@ public abstract class CameraActivity extends HomeActivity
         try{
             String image = String.valueOf(createImageFile());
             Bitmap bitmap = BitmapFactory.decodeFile(image);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -924,5 +802,7 @@ public abstract class CameraActivity extends HomeActivity
     protected abstract void setUseNNAPI(boolean isChecked);
 
     protected abstract ArrayList currentImageLog();
+
+    protected abstract void deleteImageFiles() throws ParseException;
 }
 

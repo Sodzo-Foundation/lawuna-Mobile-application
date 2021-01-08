@@ -84,11 +84,16 @@ public class SignInOtp extends MainActivity {
         phone_number = intent.getStringExtra("phone_number");
 
         sendVerificationCode(phone_number);
-//        String number_save = phone_number;
         Log.d(TAG, "onCreate: PHONE "+phone_number);
+<<<<<<< HEAD:android/app/src/main/java/com/example/lawuna/SignInOtp.java
 //        Send OTP Code
         otpDesc.setText(Html.fromHtml("<h2>We've sent an OTP<br/>"
                 +" (One Time Pin) <br/>to</h2>"
+=======
+        //  Send OTP Code
+        otpDesc.setText(Html.fromHtml("<h2>We've SMSed an OTP\n"
+                +" (One Time Pin) to</h2>"
+>>>>>>> develop:app/src/main/java/com/example/lawuna/SignInOtp.java
                 +phone_number));
 
         send_otp.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +113,7 @@ public class SignInOtp extends MainActivity {
         resend_otp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//        Send OTP Code
+            // Send OTP Code
                 sendVerificationCode(phone_number);
                 if (phone_number.length() != 0){
                     new Handler().postDelayed(new Runnable() {
@@ -125,10 +130,10 @@ public class SignInOtp extends MainActivity {
         });
 
     }
-    //    Verify OTP code
+    // Verify OTP code
     private void verifyCode(String code){
         PhoneAuthCredential credentials = PhoneAuthProvider.getCredential(verificationId, code);
-//        Allow the user to sign in
+        // Allow the user to sign in
         signInWithCredential(credentials);
     }
 
@@ -144,7 +149,12 @@ public class SignInOtp extends MainActivity {
                             String phoneNumber  = user.getPhoneNumber();
                             String uID = user.getUid();
                             Intent intent = new Intent(SignInOtp.this, HomeActivity.class);
+<<<<<<< HEAD:android/app/src/main/java/com/example/lawuna/SignInOtp.java
 //                            Clear the Stack and start new Activity
+=======
+                            // Clear the Stack and start new Activity
+
+>>>>>>> develop:app/src/main/java/com/example/lawuna/SignInOtp.java
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             intent.putExtra("phone_number", phoneNumber);
 
@@ -173,16 +183,15 @@ public class SignInOtp extends MainActivity {
                 phone_number,
                 20,
                 TimeUnit.SECONDS,
-//                TaskExecutors.MAIN_THREAD,
                 SignInOtp.this,
                 mCallBack
         );
     }
 
-    //    Callback instance
+    // Callback instance
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks
             mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-        //        Called when code is sent s= verification Id sent by the SMS
+        // Called when code is sent s= verification Id sent by the SMS
         @Override
         public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken){
             super.onCodeSent(s, forceResendingToken);
@@ -193,7 +202,7 @@ public class SignInOtp extends MainActivity {
             mResendToken = forceResendingToken;
         }
 
-        //    Called when the verification is complete, gets code automatically
+        // Called when the verification is complete, gets code automatically
         @Override
         public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
             String code = phoneAuthCredential.getSmsCode();

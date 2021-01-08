@@ -57,21 +57,21 @@
             android:text="Create Account" />
     </LinearLayout>
 
-        <TextView
-            android:id="@+id/disclaimer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="70dp"
-            android:layout_marginBottom="10dp"
-            android:paddingRight="8dp"
-            android:paddingLeft="8dp"
-            android:layout_marginEnd="10dp"
-            android:textAlignment="center"
-            android:textSize="15sp"
-            android:fontFamily="sans-serif-medium"
-            android:textColorHighlight="#00FFFFFF"
-            android:text="Disclaimer" />
+    <TextView
+        android:id="@+id/disclaimer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="10dp"
+        android:paddingRight="8dp"
+        android:paddingLeft="8dp"
+        android:layout_marginEnd="10dp"
+        android:textAlignment="center"
+        android:textSize="15sp"
+        android:fontFamily="sans-serif-medium"
+        android:textColorHighlight="#00FFFFFF"
+        android:text="Disclaimer" />
 
 
 

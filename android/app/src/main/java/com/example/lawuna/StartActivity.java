@@ -1,3 +1,5 @@
+package com.example.lawuna;
+
 /*
  * Copyright 2020 The Lawuna Authors. All Rights Reserved.
  *
@@ -13,8 +15,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.example.lawuna;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -39,12 +39,13 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+
 public class StartActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private static final String TAG = "StartActivity";
     ProgressDialog progress;
-   // Firebase user sign in status
+    // Firebase user sign in status
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override

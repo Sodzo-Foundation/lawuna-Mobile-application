@@ -82,7 +82,10 @@ public class SignUpActivity extends MainActivity {
         final EditText userEmail = findViewById(R.id.userEmail);
         String termsAndConditions = getResources().getString(R.string.terms_and_conditions);
         String privacyPolicy = getResources().getString(R.string.privacy_policy);
+<<<<<<< HEAD:android/app/src/main/java/com/example/lawuna/SignUpActivity.java
 
+=======
+>>>>>>> develop:app/src/main/java/com/example/lawuna/SignUpActivity.java
         disclaimer.setMovementMethod(LinkMovementMethod.getInstance());
         Pattern termsAndConditionsMatcher = Pattern.compile(termsAndConditions);
         Linkify.addLinks(disclaimer, termsAndConditionsMatcher, "terms:");
@@ -135,16 +138,16 @@ public class SignUpActivity extends MainActivity {
                 username = fullName.getText().toString().trim();
                 email = userEmail.getText().toString().trim();
 
-//                Username && Email Data
+            // Username && Email Data
                 u_name = setUsername(username);
                 u_email = setEmail(email);
-            //Check if the entry fields are not null
+            // Check if the entry fields are not null
                 if(username.length() == 0 || email.length() == 0){
                     Toast.makeText(getApplicationContext(),
                             "Enter All Credentials", Toast.LENGTH_LONG).show();
                 }else{
-//                    Check if the email exists
-//                    Create JSON Object for data transfer
+            // Check if the email exists
+            // Create JSON Object for data transfer
                     JSONObject registrationData = new JSONObject();
                     try{
                         registrationData.put("email", email);
@@ -167,10 +170,13 @@ public class SignUpActivity extends MainActivity {
             }
         });
 
+<<<<<<< HEAD:android/app/src/main/java/com/example/lawuna/SignUpActivity.java
     }
 
+=======
+>>>>>>> develop:app/src/main/java/com/example/lawuna/SignUpActivity.java
     @Override
-//    Post Network Request
+    // Post Network Request
     public void postRequest(String postUrl, RequestBody postBody){
         progress = ProgressDialog.show(this, "Registration",
                 "Checking...", true);
@@ -179,6 +185,7 @@ public class SignUpActivity extends MainActivity {
                 .post(postBody)
                 .header("Accept","application/json")
                 .build();
+        // The singleton HTTP client.
         OkHttpClient client = HTTPClient.getHttpClient();
 
         client.newCall(request).enqueue(new Callback() {
@@ -233,7 +240,6 @@ public class SignUpActivity extends MainActivity {
                                 intent.putExtra("u_name",u_name);
                                 intent.putExtra("u_email",u_email);
                                 startActivity(intent);
-//                                finish();
 
                             }else if (serverR.equals(email_used)){ //Email Taken
                                 new Thread(new Runnable() {
@@ -254,7 +260,6 @@ public class SignUpActivity extends MainActivity {
                                                 "Email already used.", Toast.LENGTH_LONG).show();
                                     }
                                 },950);
-//                                setSignInStatus(1);
 
                             }else {
                                 new Thread(new Runnable() {
@@ -283,6 +288,7 @@ public class SignUpActivity extends MainActivity {
         });
     }
 
+<<<<<<< HEAD:android/app/src/main/java/com/example/lawuna/SignUpActivity.java
     //    Setter for the Full Names
     public String setUsername(String name) {
         return name;
@@ -292,5 +298,7 @@ public class SignUpActivity extends MainActivity {
     public String setEmail(String email) {
         return email;
     }
+=======
+>>>>>>> develop:app/src/main/java/com/example/lawuna/SignUpActivity.java
 
 }

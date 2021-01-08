@@ -1,3 +1,5 @@
+package com.example.lawuna;
+
 /*
  * Copyright 2020 The Lawuna Authors. All Rights Reserved.
  *
@@ -14,8 +16,6 @@
  * limitations under the License.
  */
 
-package com.example.lawuna;
-
 import android.content.Context;
 import android.os.Environment;
 
@@ -24,6 +24,8 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DeleteWorker extends Worker {
     private static final String TAG = "DeleteWorker";
@@ -59,12 +61,13 @@ public class DeleteWorker extends Worker {
     private void deleteImages() {
         File storageDir = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES), IMAGE_DIRECTORY_NAME);
-            if (storageDir.isDirectory()) {
-                String[] children = storageDir.list();
-                for (int i = 0; i < children.length; i++) {
-                    new File(storageDir, children[i]).delete();
-                }
+        //Delete all images that were taken  with this app yesterday
+        if (storageDir.isDirectory()) {
+            String[] children = storageDir.list();
+            for (int i = 0; i < children.length; i++) {
+                new File(storageDir, children[i]).delete();
             }
+        }
     }
 
 }

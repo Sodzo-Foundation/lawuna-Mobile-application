@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 The Lawuna Authors. All Rights Reserved.
+ * Copyright 2019 The Lawuna Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,17 +37,6 @@ import android.util.Size;
 import android.util.TypedValue;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-//import com.android.volley.AuthFailureError;
-//import com.android.volley.NetworkResponse;
-//import com.android.volley.NoConnectionError;
-//import com.android.volley.Request;
-//import com.android.volley.Response;
-//import com.android.volley.TimeoutError;
-//import com.android.volley.VolleyError;
-//import com.android.volley.toolbox.StringRequest;
-//import com.google.gson.Gson;
-
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -233,27 +222,9 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
         computingDetection = true;
         File imageFile = null;
         try {
-//      Creates a temporary image file in cache
+         // Creates a temporary image file in cache
             imageFile = createImageFile();
             imageUri = String.valueOf(imageFile);
-//      Store a list of uri's of the images captured
-            logData = "Daily Record of the captured images.\n";
-            imageFileList.add(imageUri);
-            // How to store JSON string
-            String data = gson.toJson(imageFileList);
-            image_log_session.createUserImageLogSession(data);
-            // get Image Log
-            imagelog = user.get(LogSessionManager.KEY_IMAGE_LOG);
-//            image_logs.setList(imageUri);
-//            Gets List of the images stored currently on the server on a specific day
-            if (imageListLog != null) {
-                Iterator iter = imageListLog.iterator();
-                while (iter.hasNext()) {
-                    images_captured = logData.concat(iter.next() + "\n");
-                }
-                LOGGER.i("IMAGE_LIST: " + imageListLog);
-            }
-
         } catch (IOException ex) {
             // Error occurred while creating the File
             Toast.makeText(
@@ -267,12 +238,12 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
         getPosition();
         rgbFrameBitmap.setPixels(getRgbBytes(), 0, previewWidth, 0, 0, previewWidth, previewHeight);
         if (imageFile != null) {
+        //Save the image to the server
             connectServer(imageFile);
         } else {
             LOGGER.i("NO PHOTO CONTAINED ");
         }
         LOGGER.i("DIRECTORY " + imageFile);
-        LOGGER.i("IMAGE_URI " + imageUri);
         readyForNextImage();
 
         final Canvas canvas = new Canvas(croppedBitmap);
@@ -338,13 +309,42 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                 });
     }
 
+
+    //  Query for all the activities in the device which will handle the CAPTURE_REQUEST intent
+    private void openCameraIntent() {
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                LOGGER.i("IOException" + ex);
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
+            }
+        }
+    }
+
+
+    private void openCamera() {
+        Intent pictureIntent = new Intent(
+                MediaStore.ACTION_IMAGE_CAPTURE
+        );
+        startActivityForResult(pictureIntent, REQUEST_CAPTURE_IMAGE);
+    }
+
     //  Load image
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && data != null) {
             Uri path = data.getData();
-//      Get Capture Image
+        // Get Capture Image
             mImageBitmap = (Bitmap) data.getExtras().get("data");
         }
     }
@@ -384,13 +384,9 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
         return image;
     }
 
-    public ArrayList currentImageLog() {
-        imageLogList = gson.fromJson(imagelog, ArrayList.class);
-        return imageFileList;
-    }
-
     public void setSentDate(String date){this.sent_date=date;}
     public String getSentDate() {return sent_date;}
+
 
     void connectServer(File imageUrl) {
         setSentDate(sent_date);
@@ -445,6 +441,12 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        // Delete the file from the internal storage.
+                        try {
+                            deleteImageFiles();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         Toast.makeText(
                                 DetectorActivity.this,
                                 "Image Saved",
@@ -455,27 +457,6 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                 response.body().close();
             }
         });
-    }
-
-    private String convertStreamToString(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString();
     }
 
     @Override
