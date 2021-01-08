@@ -1,0 +1,2 @@
+rootProject.name='Lawuna'
+include ':app',':tensorflow-lite'
